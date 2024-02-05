@@ -1,0 +1,22 @@
+.card-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+}
+
+.card-left {
+  display: flex;
+  gap: 10px;
+}
+
+.todo-action-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.completed-task {
+  text-decoration: line-through;
+}
