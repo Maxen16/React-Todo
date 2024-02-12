@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Card from "./Card/Card.jsx";
+import EditTodoModal from "./Modal/Modal.jsx";
 import "./styles.css";
 
 export default function TodoForm() {
@@ -10,10 +11,28 @@ export default function TodoForm() {
 
     return JSON.parse(localValue);
   });
+  const [modalShow, setModalShow] = useState(false);
+  const [currentTaskName, setCurrentTaskName] = useState("");
+  const [editedTaskName, setEditedName] = useState("");
+  const [currentTaskId, setTaskId] = useState("");
 
   useEffect(() => {
     localStorage.setItem("ITEMS", JSON.stringify(todo));
   }, [todo]);
+
+  function handleTaskNameEdit(event) {
+    setEditedName(event.target.value);
+  }
+
+  function EditTodo(status, id) {
+    setModalShow(status);
+    setTaskId(id);
+    todo.map((todo) => {
+      if (todo.id == id) {
+        setCurrentTaskName(todo.taskName);
+      }
+    });
+  }
 
   function handleSubmit() {
     setNewTodo((currentTodo) => {
@@ -38,6 +57,18 @@ export default function TodoForm() {
         return todo;
       });
     });
+  }
+
+  function saveChanges(id) {
+    setNewTodo((currentTodo) => {
+      return currentTodo.map((todo) => {
+        if (todo.id == id) {
+          return { ...todo, taskName: editedTaskName };
+        }
+        return todo;
+      });
+    });
+    setModalShow(false);
   }
 
   function deleteTodo(id) {
@@ -85,10 +116,20 @@ export default function TodoForm() {
                 todo={todo}
                 toggleTodo={toggleTodo}
                 deleteTodo={deleteTodo}
+                setModalShow={setModalShow}
+                EditTodo={EditTodo}
               />
             );
           })}
         </div>
+        <EditTodoModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          currentTaskName={currentTaskName}
+          handleTaskNameEdit={handleTaskNameEdit}
+          saveChanges={saveChanges}
+          id={currentTaskId}
+        />
       </div>
     </div>
   );

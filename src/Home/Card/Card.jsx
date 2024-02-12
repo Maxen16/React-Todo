@@ -1,7 +1,7 @@
 import "./card.css";
 import PropTypes from "prop-types";
 
-const Card = ({ todoItem, toggleTodo, deleteTodo }) => {
+const Card = ({ todoItem, toggleTodo, deleteTodo, EditTodo }) => {
   return (
     <div className="card-container" id={todoItem.id}>
       <div className="card-left">
@@ -17,7 +17,10 @@ const Card = ({ todoItem, toggleTodo, deleteTodo }) => {
         </div>
       </div>
       <div className="todo-action-container">
-        <i className="bi bi-pencil-square"></i>
+        <i
+          className="bi bi-pencil-square"
+          onClick={() => EditTodo(true, todoItem.id)}
+        ></i>
         <i className="bi bi-trash3" onClick={() => deleteTodo(todoItem.id)}></i>
       </div>
     </div>
@@ -32,6 +35,7 @@ Card.propTypes = {
   }).isRequired,
   toggleTodo: PropTypes.func.isRequired,
   deleteTodo: PropTypes.func.isRequired,
+  EditTodo: PropTypes.func.isRequired,
 };
 
 export default Card;

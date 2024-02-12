@@ -1,0 +1,11 @@
+.modal-content {
+  background-color: var(--secondary-background);
+}
+
+.custom-btn {
+  background: var(--secondary-color);
+}
+
+.custom-btn:hover {
+  background: var(--secondary-color);
+}
